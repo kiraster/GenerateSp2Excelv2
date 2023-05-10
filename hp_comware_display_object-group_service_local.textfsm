@@ -1,0 +1,13 @@
+Value Required OBJ_GROUP_NAME (\S+(?:\s\S+)*)
+Value List OBJ_ITEM (\S+(?:\s\S+)*)
+Value REFERENCED (in use|out of use)
+Value DESC (\S+(?:\s\S+)*)
+
+Start
+  ^Service object group -> Continue
+  ^Service object group ${OBJ_GROUP_NAME}: \d+ objects\(${REFERENCED}\)
+  ^< -> NoRecord
+  ^${DESC}
+  ^\s+object -> NoRecord
+  ^\s+${OBJ_ITEM}
+  ^$$ -> Record
