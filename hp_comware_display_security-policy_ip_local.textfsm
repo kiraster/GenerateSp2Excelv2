@@ -1,0 +1,44 @@
+Value Required RULE_ID (\d+)
+Value RULE_NAME (\S+(?:\s\S+)*)
+Value ACTIVE_STATE (Inactive|Active)
+Value ACTION (pass|drop)
+Value VRF (\S+(?:\s\S+)*)
+Value PROFILE (\S+(?:\s\S+)*)
+Value LOGGING (enable|disable)
+Value List COUNTING (\S+(?:\s\S+)*)
+Value TIME_RANGE (\S+(?:\s\S+)*)
+Value DESC (\S+(?:\s\S+)*)
+Value List SESSION (\S+(?:\s\S+)*)
+Value List SRC_ZONE (\S+(?:\s\S+)*)
+Value List DEST_ZONE (\S+(?:\s\S+)*)
+Value List SRC_IP (\S+(?:\s\S+)*)
+Value List DEST_IP (\S+(?:\s\S+)*)
+Value List SERVICE (\S+(?:\s\S+)*)
+Value List APPLICATION (\S+(?:\s\S+)*)
+Value List USER (\S+(?:\s\S+)*)
+
+Start
+  ^\s+rule \d+ name \S+ -> Continue
+  ^\s+rule ${RULE_ID} name ${RULE_NAME} -> Continue
+  ^\s+rule ${RULE_ID} name ${RULE_NAME} \(${ACTIVE_STATE}\)
+  ^< -> NoRecord
+  ^\s+action ${ACTION}
+  ^\s+vrf ${VRF} 
+  ^\s+profile ${PROFILE} 
+  ^\s+logging ${LOGGING} 
+  ^\s+counting ${COUNTING}        
+  ^\s+time-range ${TIME_RANGE}
+  ^\s+description ${DESC}
+  ^\s+session ${SESSION}
+  ^\s+source-zone ${SRC_ZONE} 
+  ^\s+destination-zone ${DEST_ZONE} 
+  ^\s+source-ip ${SRC_IP}
+  ^\s+source-ip\S+ ${SRC_IP}
+  ^\s+destination-ip ${DEST_IP}
+  ^\s+destination-ip\S+ ${DEST_IP}
+  ^\s+service ${SERVICE}
+  ^\s+service-port ${SERVICE}
+  ^\s+application ${APPLICATION}
+  ^\s+user ${USER} 
+  ^\s+source-mac ${SRC_IP}
+  ^$$ -> Record
